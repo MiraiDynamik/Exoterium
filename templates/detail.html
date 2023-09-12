@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ paper.title }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <h1>Current Research</h1>
+    <div>
+        <h2>{{ paper.title }}</h2>
+
+        <p>Arxiv ID:</p>
+        <p>{{ paper.objectID }}</p>
+
+        <p>Authors:</p>
+        <p>{{ paper.authors_parsed }}</p>
+
+        <p>Journal Reference:</p>
+        <p>{{ paper.journal_ref }}</p>
+
+        <p>Categories:</p>
+        <p>{{ paper.categories }}</p>
+
+        <p>Date:</p>
+        <p>{{ paper.first_version_date }}</p>
+    </div>
+    <div>
+        <p>Abstract:</p>
+        <p>{{ paper.abstract }}</p>
+    </div>
+    <a href="/">Back</a>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* Reset some default browser styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color for the body */
+body {
+    background-color: #eee;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the header */
+h1 {
+    background-color: #b62a34;
+    color: #fff;
+    padding: 24px;
+    text-align: left;
+}
+
+/* Style the main content container */
+div {
+    background-color: #eee;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #555;
+}
+
+/* Style the headings */
+h2 {
+    color: #141414;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Style the paragraphs */
+p {
+    color: #141414;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Style the link */
+a {
+    display: block;
+    text-align: left;
+    margin-top: 20px;
+    text-decoration: none;
+    background-color: #eee;
+    color: #141414;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Hover effect for the link */
+a:hover {
+    background-color: #ddd;
+}
+
+/* Style the search input and button */
+#search-input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#search-button {
+    padding: 10px 20px;
+    background-color: #b62a34;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the results list */
+#results {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+}
+
+#results li {
+    margin-bottom: 10px;
+}
+
+#results a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
