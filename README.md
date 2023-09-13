@@ -1,6 +1,6 @@
 # Exoterium
 
-A webapp project aims to provide a platform where high school students can easily understand what are researchers are currently doing.
+A webapp project aims to provide a platform where high school students can easily understand what researchers are currently doing.
 this platform will help them to:
 
 1. Feel easier in choosing their future undergraduate majors.
