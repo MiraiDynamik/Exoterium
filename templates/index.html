@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <meta charset="utf-8" />
     <title>Current Research</title>
@@ -7,17 +7,17 @@
 </head>
 <body>
     <h1>Current Research</h1>
-    <input type="text" id="search-input" placeholder="Search...">
+    <label for="search-input"></label><input type="text" id="search-input" placeholder="Search...">
     <button id="search-button">Search</button>
     <ul id="results"></ul>
 
     <!-- Auth0: user profile -->
     {% if session %}
-    <h3>Welcome {{session.userinfo.name}}!</h3>
+    <h3>Welcome, {{session.userinfo.name}}!</h3>
     <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
     <div><pre>{{pretty}}</pre></div>
     {% else %}
-    <h3 id="profileDropDown">Welcome Guest</h3>
+    <h3 id="profileDropDown">Welcome, Guest!</h3>
     <p><a href="/login" id="qsLoginBtn">Login</a></p>
     {% endif %}
 
@@ -48,7 +48,9 @@
             const query = searchInput.value;
 
             // Perform a search
-            index.search(query)
+            index.search('query', {
+                clickAnalytics: true
+            })
                 .then(({ hits }) => {
                     displayResults(hits);
                 })

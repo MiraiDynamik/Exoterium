@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ paper.title }}</title>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
+   <!-- including algolia insights client-->
+    <script>
+        const ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@2.8.2/dist/search-insights.min.js";
+
+        !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
+            (e[s].queue=e[s].queue||[]).push(arguments)},e[s].version=(n.match(/@([^\/]+)\/?/) || [])[1],i=a.createElement(t),c=a.getElementsByTagName(t)[0],
+            i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
+        }(window,document,"script",ALGOLIA_INSIGHTS_SRC,"aa");
+    </script>
 </head>
 <body>
     <h1>Current Research</h1>
@@ -31,5 +40,58 @@
         <p>{{ paper.abstract }}</p>
     </div>
     <a href="/">Back</a>
+    <button id="likeButton">Like</button>
+
+
+    <script src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script type="text/javascript">
+        const likeButton = document.getElementById('likeButton');
+
+        const sub = "{{ session.userinfo.sub }}";
+        const hashedSub = CryptoJS.MD5(sub).toString();
+        console.log(hashedSub);
+
+        aa('setUserToken', hashedSub);
+
+        // Algolia Client: Initialize
+        aa('init', {
+            appId: 'SF0IKHXEOM',
+            apiKey: 'd230e775381cdb00d71055ca68ce0a32',
+        });
+
+            // Add a click event listener to the "like" button
+            likeButton.addEventListener('click', function() {
+
+
+                // Define the object ID of the current paper (replace "# the obj id of current paper" with the actual object ID)
+                const paperObjectID = $('p:contains("Arxiv ID:") + p').text();
+
+
+                console.log(sub);
+                console.log(paperObjectID);
+
+
+                // Send the "like_paper" event to Algolia Insights
+                aa('convertedObjectIDs', {
+                    index: 'test_arXiv',
+                    eventName: 'like_paper',
+                    objectIDs: [paperObjectID],
+                });
+                // Optionally, you can update the button label or style to indicate that the paper is liked.
+                likeButton.innerText = 'Liked'; // Update the button label
+                likeButton.disabled = true; // Disable the button to prevent multiple clicks
+        });
+
+    </script>
+    <!-- Auth0: user profile -->
+    {% if session %}
+    <h3>Welcome, {{session.userinfo.name}}!</h3>
+    <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
+    {% else %}
+    <h3 id="profileDropDown">Welcome, Guest!</h3>
+    <p><a href="/login" id="qsLoginBtn">Login</a></p>
+    {% endif %}
 </body>
 </html>

@@ -67,7 +67,7 @@ def detail(object_id):
     paper = index.get_object(object_id)  # Retrieve the paper data from Algolia based on the objectID
 
     if paper:
-        return render_template('detail.html', paper=paper)
+        return render_template('detail.html', paper=paper, session=session.get("user"))
     else:
         return "Paper not found", 404  # Handle the case where the paper is not found
 
@@ -107,5 +107,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=env.get("PORT", 3000))
+    app.run(host="0.0.0.0", port=env.get("PORT", 3000), debug=True)
     # without Auth0, here is "app.run(debug=True)", and the app is running on localhost:5000/
