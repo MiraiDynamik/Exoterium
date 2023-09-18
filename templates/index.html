@@ -48,7 +48,7 @@
             const query = searchInput.value;
 
             // Perform a search
-            index.search('query', {
+            index.search(query, {
                 clickAnalytics: true
             })
                 .then(({ hits }) => {
