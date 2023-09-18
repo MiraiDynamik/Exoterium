@@ -43,6 +43,7 @@
     <button id="likeButton">Like</button>
 
 
+    {% if session %}
     <script src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -83,8 +84,13 @@
                 likeButton.innerText = 'Liked'; // Update the button label
                 likeButton.disabled = true; // Disable the button to prevent multiple clicks
         });
-
     </script>
+    {% else %}
+    <script>
+    </script>
+    {% endif %}
+
+
     <!-- Auth0: user profile -->
     {% if session %}
     <h3>Welcome, {{session.userinfo.name}}!</h3>
