@@ -9,4 +9,4 @@ this platform will help them to:
 
 3. Achieve a broader view on current science.
 
-'Exoterium', means 'exoteric academic place'
+'Exoterium', means 'exoteric academic place'. I'm thinking about its Chinese name.
