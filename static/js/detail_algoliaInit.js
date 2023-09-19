@@ -1,3 +1,5 @@
+// detail_algoliaInit.js
+
 const ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@2.8.2/dist/search-insights.min.js";
 
 !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){

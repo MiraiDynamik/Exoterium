@@ -1,3 +1,5 @@
+// detail_like.js
+
 const likeButton = document.getElementById('likeButton');
 
 const sub = "{{ session.userinfo.sub }}";
