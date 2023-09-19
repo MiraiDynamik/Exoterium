@@ -26,7 +26,9 @@ function performSearch() {
     index.search(query, {
         clickAnalytics: true
     })
-        .then(({ hits }) => {
+        .then(({ hits, queryID }) => {
+            console.log('Search results:', hits);
+            console.log('QueryID:', queryID);
             displayResults(hits);
         })
         .catch(err => {

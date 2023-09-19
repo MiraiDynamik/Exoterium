@@ -48,19 +48,6 @@ def home():
     )
 
 
-# Algolia: Route for handling search requests
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('q')
-
-    if query:
-        response = index.search(query)  # Perform the Algolia search
-        hits = response['hits']  # Extract relevant data from the search response
-        return jsonify(hits)  # Return the search results as JSON
-    else:
-        return jsonify([])
-
-
 # Algolia: Route for handling detail page
 @app.route('/detail/<object_id>', methods=['GET'])
 def detail(object_id):
