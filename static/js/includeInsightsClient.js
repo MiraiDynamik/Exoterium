@@ -1,4 +1,4 @@
-// detail_algoliaInit.js
+// includeInsightsClient.js
 
 const ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@2.8.2/dist/search-insights.min.js";
 

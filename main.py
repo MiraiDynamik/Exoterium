@@ -1,3 +1,4 @@
+# main.py
 from flask import Flask, request, jsonify, redirect, render_template, session, url_for
 from algoliasearch.search_client import SearchClient
 
