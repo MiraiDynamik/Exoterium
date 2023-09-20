@@ -24,6 +24,8 @@ searchInput.addEventListener('keydown', event => {
     }
 });
 
+let queryID = null;
+
 // Function to perform the search
 function performSearch() {
     const query = searchInput.value;
@@ -32,9 +34,13 @@ function performSearch() {
     index.search(query, {
         clickAnalytics: true
     })
-        .then(({ hits, queryID }) => {
+        .then(({ hits, queryID: receivedQueryID }) => {
             console.log('Search results:', hits);
-            console.log('QueryID:', queryID);
+            console.log('QueryID:', receivedQueryID);
+
+            // Set the queryID value from the response to the outer queryID variable
+            queryID = receivedQueryID;
+
             displayResults(hits);
         })
         .catch(err => {
@@ -60,14 +66,19 @@ function displayResults(results) {
             link.textContent = result.title;
 
             // Attach a click event handler to the link
-            const [paperObjectID] = result.objectID
+            const paperObjectID = result.objectID;
             link.addEventListener('click', () => {
-                // Send the "like_paper" event to Algolia Insights
+
+                // Get the position of the clicked item
+                const position = results.findIndex(resultItem => resultItem.objectID === result.objectID);
+
+                // Send the "click_paper" event to Algolia Insights
                 aa('clickedObjectIDsAfterSearch', {
                     index: 'test_arXiv',
                     eventName: 'click_paper',
-                    queryID: 'queryID',
+                    queryID: queryID,
                     objectIDs: [paperObjectID],
+                    positions: [position],
                 });
             });
 
