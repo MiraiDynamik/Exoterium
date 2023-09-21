@@ -1,4 +1,5 @@
 // index_search.js
+// used in index.html
 
 const searchClient = algoliasearch('SF0IKHXEOM', 'd230e775381cdb00d71055ca68ce0a32');
 const index = searchClient.initIndex('test_arXiv');
@@ -60,7 +61,9 @@ function displayResults(results) {
 
             // Create a hyperlink for the result's title
             const link = document.createElement('a');
-            link.href = `/detail/${result.objectID}`; // Link to the detail page with the objectID
+
+            // Link to the detail page with the objectID and add the queryID as a URL parameter
+            link.href = `/detail/${result.objectID}?queryID=${queryID}`;
 
             // Set the title as the link text
             link.textContent = result.title;
@@ -70,7 +73,7 @@ function displayResults(results) {
             link.addEventListener('click', () => {
 
                 // Get the position of the clicked item
-                const position = results.findIndex(resultItem => resultItem.objectID === result.objectID);
+                const position = results.findIndex(resultItem => resultItem.objectID === result.objectID) + 1;
 
                 // Send the "click_paper" event to Algolia Insights
                 aa('clickedObjectIDsAfterSearch', {
