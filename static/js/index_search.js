@@ -6,6 +6,12 @@ const index = searchClient.initIndex('test_arXiv');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsList = document.getElementById('results');
+const sub = "{{ session.userinfo.sub }}";
+const hashedSub = CryptoJS.MD5(sub).toString();
+
+
+console.log(hashedSub);
+aa('setUserToken', hashedSub);
 
 // Algolia Client: Initialize
 aa('init', {
