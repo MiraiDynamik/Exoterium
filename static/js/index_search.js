@@ -36,23 +36,24 @@ let queryID = null;
 // Function to perform the search
 function performSearch() {
     const query = searchInput.value;
-
-    // Perform a search
-    index.search(query, {
-        clickAnalytics: true
-    })
-        .then(({ hits, queryID: receivedQueryID }) => {
-            console.log('Search results:', hits);
-            console.log('QueryID:', receivedQueryID);
-
-            // Set the queryID value from the response to the outer queryID variable
-            queryID = receivedQueryID;
-
-            displayResults(hits);
+    if (query) {
+        // Perform a search
+        index.search(query, {
+            clickAnalytics: true
         })
-        .catch(err => {
-            console.error(err);
-        });
+            .then(({hits, queryID: receivedQueryID}) => {
+                console.log('Search results:', hits);
+                console.log('QueryID:', receivedQueryID);
+
+                // Set the queryID value from the response to the outer queryID variable
+                queryID = receivedQueryID;
+
+                displayResults(hits);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 }
 
 // Function to display results

@@ -15,7 +15,7 @@
     <button id="search-button">Search</button>
     <ul id="results"></ul>
 
-    <!-- Auth0: user profile -->
+    <!-- Auth0: get user profile -->
     {% if session %}
     <h3>Welcome, {{session.userinfo.name}}!</h3>
     <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
@@ -25,6 +25,7 @@
     <p><a href="/login" id="qsLoginBtn">Login</a></p>
     {% endif %}
 
+    <!-- perform search -->
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch-insights@1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
