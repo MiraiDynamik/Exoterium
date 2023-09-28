@@ -8,5 +8,3 @@ this platform will help them to:
 2. Be more inspired in expressing their interest about the majors that they applied for in their ps.
 
 3. Achieve a broader view on current science.
-
-'Exoterium', means 'exoteric academic place'. I'm thinking about its Chinese name.
