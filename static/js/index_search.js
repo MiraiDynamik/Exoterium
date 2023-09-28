@@ -33,6 +33,7 @@ searchInput.addEventListener('keydown', event => {
 
 let queryID = null;
 
+
 // Function to perform the search
 function performSearch() {
     const query = searchInput.value;
@@ -56,6 +57,44 @@ function performSearch() {
     }
 }
 
+
+// Function to create a list item with a hyperlink
+function createListItem(result, queryID) {
+    const li = document.createElement('li');
+
+    // Create a hyperlink for the result's title
+    const link = document.createElement('a');
+
+    // Link to the detail page with the objectID and add the queryID as a URL parameter
+    link.href = `/detail/${result.objectID}?queryID=${queryID}`;
+
+    // Set the title as the link text
+    link.textContent = result.title;
+
+    // Return the list item with the hyperlink
+    return { li, link };
+}
+
+
+// Function to handle the click event and send the event to Algolia Insights
+function handleLinkClick(result, queryID, results) {
+    return () => {
+
+        // Get the position of the clicked item
+        const position = results.findIndex(resultItem => resultItem.objectID === result.objectID) + 1;
+
+        // Send the "click_paper" event to Algolia Insights
+        aa('clickedObjectIDsAfterSearch', {
+            index: 'test_arXiv',
+            eventName: 'click_paper',
+            queryID: queryID,
+            objectIDs: [result.objectID],
+            positions: [position],
+        });
+    };
+}
+
+
 // Function to display results
 function displayResults(results) {
     resultsList.innerHTML = '';
@@ -64,33 +103,10 @@ function displayResults(results) {
         resultsList.innerHTML = '<li>No results found.</li>';
     } else {
         results.forEach(result => {
-            const li = document.createElement('li');
-
-            // Create a hyperlink for the result's title
-            const link = document.createElement('a');
-
-            // Link to the detail page with the objectID and add the queryID as a URL parameter
-            link.href = `/detail/${result.objectID}?queryID=${queryID}`;
-
-            // Set the title as the link text
-            link.textContent = result.title;
+            const { li, link } = createListItem(result, queryID);
 
             // Attach a click event handler to the link
-            const paperObjectID = result.objectID;
-            link.addEventListener('click', () => {
-
-                // Get the position of the clicked item
-                const position = results.findIndex(resultItem => resultItem.objectID === result.objectID) + 1;
-
-                // Send the "click_paper" event to Algolia Insights
-                aa('clickedObjectIDsAfterSearch', {
-                    index: 'test_arXiv',
-                    eventName: 'click_paper',
-                    queryID: queryID,
-                    objectIDs: [paperObjectID],
-                    positions: [position],
-                });
-            });
+            link.addEventListener('click', handleLinkClick(result, queryID, results));
 
             // Append the hyperlink to the list item
             li.appendChild(link);
