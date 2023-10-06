@@ -37,8 +37,9 @@
         <p>{{ paper.abstract }}</p>
     </div>
     <a href="/">Back</a>
-    <button id="likeButton">Like</button>
 
+    <!-- Link to Full Passage PDF with dynamic Arxiv ID -->
+    <a href="https://browse.arxiv.org/pdf/{{ paper.objectID }}.pdf" target="_blank" id="fullPassage">Full Passage</a>
 
     {% if session %}
     <script src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script>

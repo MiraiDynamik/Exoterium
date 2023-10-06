@@ -1,7 +1,7 @@
 // detail_like.js
 // used in detail.html
 
-const likeButton = document.getElementById('likeButton');
+const fullPassage = document.getElementById('fullPassage');
 
 const sub = "{{ session.userinfo.sub }}";
 const hashedSub = CryptoJS.MD5(sub).toString();
@@ -29,7 +29,7 @@ const queryID = getUrlParameter('queryID');
 
 
     // Add a click event listener to the "like" button
-likeButton.addEventListener('click', function() {
+fullPassage.addEventListener('click', function() {
 
     // Define the object ID of the current paper (replace "# the obj id of current paper" with the actual object ID)
     const paperObjectID = $('p:contains("Arxiv ID:") + p').text();
@@ -44,7 +44,4 @@ likeButton.addEventListener('click', function() {
         objectIDs: [paperObjectID],
         queryID: queryID,
     });
-    // Optionally, you can update the button label or style to indicate that the paper is liked.
-    likeButton.innerText = 'Liked'; // Update the button label
-    likeButton.disabled = true; // Disable the button to prevent multiple clicks
 });
