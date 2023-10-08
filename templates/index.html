@@ -8,12 +8,20 @@
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <!-- including algolia insights client-->
     <script src="/static/js/includeInsightsClient.js"></script>
+    <!-- ajax -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
     <h1>Current Research</h1>
     <label for="search-input"></label><input type="text" id="search-input" placeholder="Search...">
     <button id="search-button">Search</button>
     <ul id="results"></ul>
+
+    <!-- Display recommendation -->
+    <div>
+        <p>Recommend Paper：</p>
+        <ul id="recommendResults">Loading...</ul>
+    </div>
 
     <!-- Auth0: get user profile -->
     {% if session %}
