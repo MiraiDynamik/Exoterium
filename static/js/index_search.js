@@ -6,11 +6,14 @@ const index = searchClient.initIndex('test_arXiv');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsList = document.getElementById('results');
-const sub = "{{ session.userinfo.sub }}";
-const hashedSub = CryptoJS.MD5(sub).toString();
+const recommendResults = document.getElementById('recommendResults');
 
+let hashedSub = getSub();
+console.log('hashedSub', hashedSub);
+if (hashedSub !== '') {
+    getRecommendResults()
+}
 
-console.log(hashedSub);
 aa('setUserToken', hashedSub);
 
 // Algolia Client: Initialize
@@ -48,7 +51,7 @@ function performSearch() {
 
                 // Set the queryID value from the response to the outer queryID variable
                 queryID = receivedQueryID;
-
+                console.log(hits)
                 displayResults(hits);
             })
             .catch(err => {
@@ -113,6 +116,56 @@ function displayResults(results) {
 
             // Append the list item to the results list
             resultsList.appendChild(li);
+        });
+    }
+}
+
+
+function getSub() {
+    const url = 'http://localhost:3000/sub'
+    let hashSub
+    $.ajax({
+        url: url,
+        async: false,
+        success: function (res) {
+            hashSub = res
+        }
+    })
+    return hashSub
+}
+
+
+function getRecommendResults() {
+    const url = 'http://localhost:3000/recommend?userID=' + hashedSub
+    let recommendData
+    $.ajax({
+        url: url,
+        async: false,
+        success: function (res) {
+            recommendData = res
+        }
+    })
+    displayRecommendResults(recommendData)
+}
+
+function displayRecommendResults(results) {
+    recommendResults.innerHTML = '';
+
+    if (results.length === 0) {
+        recommendResults.innerHTML = '<li>No results found.</li>';
+    } else {
+        console.log(results)
+        results.forEach(result => {
+            const { li, link } = createListItem(result, "recommend");
+
+            // Attach a click event handler to the link
+            link.addEventListener('click', handleLinkClick(result, "recommend", results));
+
+            // Append the hyperlink to the list item
+            li.appendChild(link);
+
+            // Append the list item to the results list
+            recommendResults.appendChild(li);
         });
     }
 }
