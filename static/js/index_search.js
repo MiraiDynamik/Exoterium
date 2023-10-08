@@ -45,7 +45,7 @@ function performSearch() {
         index.search(query, {
             clickAnalytics: true
         })
-            .then(({hits, queryID: receivedQueryID}) => {
+            .then(({hits, query_id: receivedQueryID}) => {
                 console.log('Search results:', hits);
                 console.log('QueryID:', receivedQueryID);
 
@@ -68,8 +68,12 @@ function createListItem(result, queryID) {
     // Create a hyperlink for the result's title
     const link = document.createElement('a');
 
-    // Link to the detail page with the objectID and add the queryID as a URL parameter
-    link.href = `/detail/${result.objectID}?queryID=${queryID}`;
+    if (queryID) {
+        // Link to the detail page with the objectID and add the queryID as a URL parameter
+        link.href = `/detail/${result.objectID}?queryID=${queryID}`;
+    } else {
+        link.href = `/detail/${result.objectID}`;
+    }
 
     // Set the title as the link text
     link.textContent = result.title;
@@ -87,13 +91,21 @@ function handleLinkClick(result, queryID, results) {
         const position = results.findIndex(resultItem => resultItem.objectID === result.objectID) + 1;
 
         // Send the "click_paper" event to Algolia Insights
-        aa('clickedObjectIDsAfterSearch', {
-            index: 'test_arXiv',
-            eventName: 'click_paper',
-            queryID: queryID,
-            objectIDs: [result.objectID],
-            positions: [position],
-        });
+        if (queryID) {
+            aa('clickedObjectIDsAfterSearch', {
+                index: 'test_arXiv',
+                eventName: 'click_paper',
+                queryID: queryID,
+                objectIDs: [result.objectID],
+                positions: [position],
+            });
+        } else {
+            aa('clickedObjectIDsAfterSearch', {
+                index: 'test_arXiv',
+                eventName: 'click_paper',
+                objectIDs: [result.objectID],
+            });
+        }
     };
 }
 
@@ -121,6 +133,7 @@ function displayResults(results) {
 }
 
 
+// Function to get hashed userID
 function getSub() {
     const url = 'http://localhost:3000/sub'
     let hashSub
@@ -156,10 +169,10 @@ function displayRecommendResults(results) {
     } else {
         console.log(results)
         results.forEach(result => {
-            const { li, link } = createListItem(result, "recommend");
+            const { li, link } = createListItem(result, null);
 
             // Attach a click event handler to the link
-            link.addEventListener('click', handleLinkClick(result, "recommend", results));
+            link.addEventListener('click', handleLinkClick(result, null, results));
 
             // Append the hyperlink to the list item
             li.appendChild(link);
