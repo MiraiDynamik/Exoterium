@@ -1,0 +1,80 @@
+<!-- detail.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ paper.title }}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+
+   <!-- including algolia insights client-->
+    <script src="/static/js/includeInsightsClient.js"></script>
+
+</head>
+<body style="background-color: #f2f2f2;">
+
+    <nav class="navbar bg-body-tertiary" style="background-color: #fff;">
+        <!-- Navbar content -->
+        <div class="container">
+            <span class="navbar-brand mb-0 h1;" style="color: #b62a34; font-size: 24px; ">Current Research</span>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col">
+            <div class="container mt-4">
+                <div class="card-body" style="background-color: #fff3f3;">
+                    <h2 class="card-title mb-5">{{ paper.title }}</h2>
+                    <p class="card-text">Arxiv ID: {{ paper.objectID }}</p>
+                    <p class="card-text">Authors: {{ paper.authors_parsed }}</p>
+                    <p class="card-text">Journal Reference: {{ paper.journal_ref }}</p>
+                    <p class="card-text">Categories: {{ paper.categories }}</p>
+                    <p class="card-text">Date: {{ paper.first_version_date }}</p>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Abstract</h5>
+                        <p class="card-text">{{ paper.abstract }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Display username -->
+        {% if session %}
+        <div class="mt-4 mb-4">
+            <h3 class="display-9">Welcome, {{ session.userinfo.name }}!</h3>
+        </div>
+        {% else %}
+        <div class="mt-4 mb-4">
+            <h3 class="display-9">Welcome, Guest!</h3>
+        </div>
+        {% endif %}
+
+        <!-- Link to index.html -->
+        <a class="btn btn-secondary mb-5" href="/">Back</a>
+        <!-- Link to Full Passage PDF with dynamic Arxiv ID -->
+        <a class="btn btn-success mb-5" href="https://browse.arxiv.org/pdf/{{ paper.objectID }}.pdf" target="_blank" id="fullPassage">Full Passage</a>
+
+
+        {% if session %}
+        <script src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+        <script src="/static/js/detail_like.js"></script>
+        {% else %}
+        <script></script>
+        {% endif %}
+
+
+        <!-- Login and logout -->
+        {% if session %}
+            <a class="btn btn-danger mb-5" href="/logout" id="qsLogoutBtn">Logout</a>
+        {% else %}
+            <a class="btn btn-danger mb-5" href="/login" id="qsLoginBtn">Login to get your personalized content!</a>
+        {% endif %}
+    </div>
+</body>
+</html>

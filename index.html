@@ -1,0 +1,71 @@
+<!-- index.html-->
+
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8" />
+    <title>Current Research</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <!-- including algolia insights client-->
+    <script src="/static/js/includeInsightsClient.js"></script>
+    <!-- ajax -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+
+<body style="background-color: #f2f2f2;">
+
+    <nav class="navbar bg-body-tertiary" style="background-color: #fff;">
+        <!-- Navbar content -->
+        <div class="container">
+            <span class="navbar-brand mb-0 h1;" style="color: #b62a34; font-size: 24px; ">Current Research</span>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col">
+            <div class="container mt-4">
+                <div class="card-body" style="background-color: #fff;">
+                    <label for="search-input"></label><input type="text" style="width: 30% !important; " id="search-input" placeholder="Search...">
+                    <button type="button" class="btn btn-primary" id="search-button">Search</button>
+                    <ul id="results"></ul>
+                </div>
+
+                <div class="card-body" style="background-color: #fff3f3;" id="recommendationBlock">
+                    <!-- Display recommendation -->
+                    <div>
+                        <p>Recommend Paper：</p>
+                        <ul id="recommendResults">Loading...</ul>
+                    </div>
+                </div>
+
+                <!-- Auth0: get user profile -->
+                <div class="container">
+                    <!-- Display username -->
+                    {% if session %}
+                    <div class="mt-4 mb-4">
+                        <h3 class="display-9">Welcome, {{ session.userinfo.name }}!</h3>
+                    </div>
+                    {% else %}
+                    <div class="mt-4 mb-4">
+                        <h3 class="display-9">Welcome, Guest!</h3>
+                    </div>
+                    {% endif %}
+
+                    <!-- Login and logout -->
+                    {% if session %}
+                        <a class="btn btn-danger mb-5" href="/logout" id="qsLogoutBtn">Logout</a>
+                    {% else %}
+                        <a class="btn btn-danger mb-5" href="/login" id="qsLoginBtn">Login to get your personalized content!</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- perform search -->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch-insights@1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="/static/js/index_search.js"></script>
+</body>
+</html>
